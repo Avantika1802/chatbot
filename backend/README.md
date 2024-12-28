@@ -20,3 +20,6 @@ dependencies:
     mongoose
     openai
 
+    <!-- second commit -->
+    morgan
+
