@@ -3,7 +3,7 @@ import {body, ValidationChain, validationResult} from "express-validator";
 
 //customised validator function
 //array of validation chains that we had defined below
-const validate = (validations : ValidationChain[]) =>{
+export const validate = (validations : ValidationChain[]) =>{
     return async (req:Request, res:Response, next:NextFunction)=>{
         for(let validation of validations){
             const result = await validation.run(req);
@@ -19,9 +19,15 @@ const validate = (validations : ValidationChain[]) =>{
     };
 };
 
-const signupValidator = [
-    body("name").notEmpty().withMessage("Name is required"),
+export const loginValidator = [
+
     body("email").trim().isEmail().withMessage("invalid email"),
     body("password").trim().isLength({min : 6}).withMessage("invalid password, should contain atleast 6 characters"),
+];
+
+export const signupValidator = [
+    body("name").notEmpty().withMessage("Name is required"),
+    //use email validator and password validator from loginValidator
+    ...loginValidator,
 ];
     

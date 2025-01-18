@@ -1,15 +1,9 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.userSignup = exports.getAllUsers = void 0;
-const User_js_1 = __importDefault(require("../models/User.js"));
-const bcrypt_1 = require("bcrypt");
-const getAllUsers = async (req, res, next) => {
+import User from "../models/User.js";
+import { hash, compare } from "bcrypt"; //compare to check password
+export const getAllUsers = async (req, res, next) => {
     // get all users
     try {
-        const users = await User_js_1.default.find();
+        const users = await User.find();
         return res.status(200).json({ message: "OK", users });
     }
     catch (error) {
@@ -17,13 +11,39 @@ const getAllUsers = async (req, res, next) => {
         return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
-exports.getAllUsers = getAllUsers;
-const userSignup = async (req, res, next) => {
+export const userSignup = async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
-        const hashedPassword = await (0, bcrypt_1.hash)(password, 10);
-        const user = new User_js_1.default({ name, email, password: hashedPassword });
+        const existingUser = await User.findOne({ email });
+        //if user already exists
+        if (existingUser) {
+            res.status(401).send("user already exists");
+        }
+        const hashedPassword = await hash(password, 10);
+        const user = new User({ name, email, password: hashedPassword });
         await user.save();
+        return res.status(201).json({ message: "OK", id: user._id.toString() });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(200).json({ message: "ERROR", cause: error.message });
+    }
+};
+export const userLogin = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        //verify if the user is present
+        if (!user) {
+            return res.status(401).send("user does not exist");
+        }
+        //verify password
+        //compare the entered password with the password stored with the user
+        const isPasswordCorrect = await compare(password, user.password);
+        //if password is incorrect return status code 403 i.e. forbidden
+        if (!isPasswordCorrect) {
+            return res.status(403).send("incorrect password");
+        }
         return res.status(200).json({ message: "OK", id: user._id.toString() });
     }
     catch (error) {
@@ -31,5 +51,4 @@ const userSignup = async (req, res, next) => {
         return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
-exports.userSignup = userSignup;
 //# sourceMappingURL=user-controllers.js.map

@@ -1,9 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const user_controllers_js_1 = require("../controllers/user-controllers.js");
-const userRoutes = (0, express_1.Router)();
-userRoutes.get("/", user_controllers_js_1.getAllUsers);
-userRoutes.post("/signup", user_controllers_js_1.userSignup);
-exports.default = userRoutes;
+import { Router } from "express";
+import { getAllUsers, userLogin, userSignup } from "../controllers/user-controllers.js";
+import { loginValidator, signupValidator, validate } from "../utils/validators.js";
+const userRoutes = Router();
+userRoutes.get("/", getAllUsers);
+userRoutes.post("/signup", validate(signupValidator), userSignup);
+userRoutes.post("/login", validate(loginValidator), userLogin);
+export default userRoutes;
 //# sourceMappingURL=user-routes.js.map
