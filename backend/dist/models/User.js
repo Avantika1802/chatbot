@@ -1,10 +1,15 @@
-import mongoose from "mongoose";
-import { randomUUID } from 'crypto';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const crypto_1 = require("crypto");
 //create chat schema
-const chatSchema = new mongoose.Schema({
+const chatSchema = new mongoose_1.default.Schema({
     id: {
         type: String,
-        default: randomUUID(),
+        default: (0, crypto_1.randomUUID)(),
     },
     role: {
         type: String,
@@ -15,8 +20,7 @@ const chatSchema = new mongoose.Schema({
         required: true,
     }
 });
-//create user schema
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
         required: true,
@@ -32,5 +36,5 @@ const userSchema = new mongoose.Schema({
     },
     chats: [chatSchema],
 });
-export default mongoose.model("User", userSchema);
+exports.default = mongoose_1.default.model("User", userSchema);
 //# sourceMappingURL=User.js.map

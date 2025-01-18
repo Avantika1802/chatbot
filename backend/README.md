@@ -7,5 +7,19 @@ It's a customized chatbot where each message of the user is stored in DB and can
 
 It's a completely secure application using JWT Tokens, HTTP-Only Cookies, Signed Cookies, Password Encryption, and Middleware Chains.
 
-Contributions are welcome
+
+dependencies: 
+    bcrypt
+    concurrently
+    cookie-parser
+    cors
+    dotenv
+    express
+    express-validator
+    jsonwebtoken
+    mongoose
+    openai
+
+    <!-- second commit -->
+    morgan
 

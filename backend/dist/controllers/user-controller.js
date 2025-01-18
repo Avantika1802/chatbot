@@ -32,4 +32,4 @@ const userSignup = async (req, res, next) => {
     }
 };
 exports.userSignup = userSignup;
-//# sourceMappingURL=user-controllers.js.map
+//# sourceMappingURL=user-controller.js.map

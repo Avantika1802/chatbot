@@ -7,6 +7,8 @@ const app=express();
 
 //middlewares
 app.use(express.json());
+// remove it in production
+app.use(morgan("dev"));
 
 //remove it in production
 app.use(morgan("dev"));

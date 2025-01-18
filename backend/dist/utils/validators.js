@@ -1,4 +1,6 @@
-import { body, validationResult } from "express-validator";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_validator_1 = require("express-validator");
 //customised validator function
 //array of validation chains that we had defined below
 const validate = (validations) => {
@@ -9,7 +11,7 @@ const validate = (validations) => {
                 break;
             }
         }
-        const errors = validationResult(req);
+        const errors = (0, express_validator_1.validationResult)(req);
         if (errors.isEmpty()) {
             return next();
         }
@@ -17,8 +19,8 @@ const validate = (validations) => {
     };
 };
 const signupValidator = [
-    body("name").notEmpty().withMessage("Name is required"),
-    body("email").trim().isEmail().withMessage("invalid email"),
-    body("password").trim().isLength({ min: 6 }).withMessage("invalid password, should contain atleast 6 characters"),
+    (0, express_validator_1.body)("name").notEmpty().withMessage("Name is required"),
+    (0, express_validator_1.body)("email").trim().isEmail().withMessage("invalid email"),
+    (0, express_validator_1.body)("password").trim().isLength({ min: 6 }).withMessage("invalid password, should contain atleast 6 characters"),
 ];
 //# sourceMappingURL=validators.js.map
