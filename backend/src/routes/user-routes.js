@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var user_controllers_js_1 = require("../controllers/user-controllers.js");
+var validators_js_1 = require("../utils/validators.js");
+var userRoutes = (0, express_1.Router)();
+userRoutes.get("/", user_controllers_js_1.getAllUsers);
+userRoutes.post("/signup", (0, validators_js_1.validate)(validators_js_1.signupValidator), user_controllers_js_1.userSignup);
+userRoutes.post("/login", (0, validators_js_1.validate)(validators_js_1.loginValidator), user_controllers_js_1.userLogin);
+exports.default = userRoutes;
