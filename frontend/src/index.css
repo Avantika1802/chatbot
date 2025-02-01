@@ -29,3 +29,9 @@ body {
   align-items: center;
   padding: 10px;
 }
+
+.MuiOutlinedInput-root {
+  border-color: white !important;
+}
+
+
